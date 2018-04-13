@@ -12,7 +12,7 @@
 #
 
 import networkx as nx
-import mobility_infos as mob
+import mobility as mob
 
 arr = mob.build_topo(trace='highway25')
 print arr['1'].get_velocityAt('149.00')
