@@ -15,7 +15,8 @@ class Car(object):
         return self.n_id
 
     def get_positionAt(self,t):
-        return self.position_at[t] if self.position_at.has_key(t) else None
+        return (float(self.position_at[t]['X_']),
+        float(self.position_at[t]['Y_'])) if self.position_at.has_key(t) else None
 
     def get_positionDict(self):
         return self.position_at

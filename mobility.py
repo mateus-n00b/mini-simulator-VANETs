@@ -11,6 +11,7 @@ def build_topo(trace):
         number_cars = int(str(parsed_tracer.readline()).split("#number cars:")[1].split("avg")[0])
         # Dict structure == {ID:node_object}
         cars_in_sim = dict()
+        sim_time = ""
 
         for rows in parsed_tracer.readlines():
             rows = rows.rstrip()
@@ -40,14 +41,18 @@ def build_topo(trace):
                 carX.setPositionAt(time,'Y_',Y)
                 # print n_id,time,velocity
                 carX.setVelocityAt(time,velocity)
-
-        return cars_in_sim
+            sim_time = rows.split(" ")[2]
+        return (cars_in_sim, sim_time)
     except Exception as error:
-            print "[-] Error!\n-> {0}".format(error)
+            print "{0}".format(error)
             exit(-1)
 
-def euclidian_distance(a,b): # A = (px,qx), B = (qx,qy)
-    return ((a[0]-b[0])**2+(a[1]-b[1])**2)**0.5
+def euclidean_distance(a,b): # A = (px,qx), B = (qx,qy)
+    try:
+        return ((a[0]-b[0])**2+(a[1]-b[1])**2)**0.5
+    except Exception as error:
+        print "Entry: ",a,b,error
+        exit(-1)
 
 # NOTE: For debuging purposes
 # trace_file = "highway25"

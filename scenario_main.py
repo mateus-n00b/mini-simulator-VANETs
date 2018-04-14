@@ -13,6 +13,7 @@
 #
 import networkx as nx
 import mobility as mob
+import metrics
 from optparse import OptionParser
 
 parser = OptionParser()
@@ -24,31 +25,24 @@ parser.add_option("-o","--output",dest="results",type="str",default="statistics.
 opt, args = parser.parse_args()
 
 # Global vars
-MAX_TRANGE = float() # maximum transmission range
-MEAN_LINK_LIFETIME = float()
-MEAN_DISTANCE = float()
+MAX_TRANGE = 200.0 # maximum transmission range
 try:
     STATISTICS_FILE = open(opt.results,"w")
     print "The output will be saved in file => {}".format(STATISTICS_FILE.name)
+    STATISTICS_FILE.close()
 except Exception as error:
     print error
     exit(-1)
 
 if opt.trace:
-    nodelist = mob.build_topo(trace=opt.trace)
+    nodelist,sim_time = mob.build_topo(trace=opt.trace)
     # print nodelist['1'].get_velocityAt('149.00') #
-    print nodelist['0'].get_positionAt('0.00') #
-    n_nodes = len(nodelist)
+    # print nodelist['0'].get_positionAt('0.00') #
+    # n_nodes = len(nodelist)
+    metrics.medium_distance(nodelist=nodelist,output_file=STATISTICS_FILE,
+    MAX_TRANGE=MAX_TRANGE,sim_time=sim_time)
 
-    # posDict = nodelist['0'].get_positionDict()
 
-    # for node in xrange(n_nodes):
-    #     consumer = nodelist[node]
-    #     for neighbor in xrange(n_nodes):
-    #         if node != neighbor:
-    #             producer = nodelist[neighbor]
-    #             distance_fromX = mob.euclidian_distance(a=(consumer['X_'],consumer['']))
-    #             if
 
 else:
     print "[-] Invalid entry! Try -h|--help for help."
