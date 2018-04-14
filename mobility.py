@@ -41,8 +41,9 @@ def build_topo(trace):
                 carX.setPositionAt(time,'Y_',Y)
                 # print n_id,time,velocity
                 carX.setVelocityAt(time,velocity)
-            sim_time = rows.split(" ")[2]
+            sim_time = rows.split(" ")[2] 
         return (cars_in_sim, sim_time)
+
     except Exception as error:
             print "{0}".format(error)
             exit(-1)
