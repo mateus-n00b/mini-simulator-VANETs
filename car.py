@@ -17,6 +17,9 @@ class Car(object):
     def get_positionAt(self,t):
         return self.position_at[t] if self.position_at.has_key(t) else None
 
+    def get_positionDict(self):
+        return self.position_at
+
     def setPositionAt(self,t,XY_coord,position):
         try:
             self.position_at[t][XY_coord] = position
@@ -26,6 +29,9 @@ class Car(object):
 
     def get_velocityAt(self,t):
         return self.velocity_at[t] if self.velocity_at.has_key(t) else None
+
+    def get_velocityDict(self):
+        return self.velocity_at
 
     def setVelocityAt(self,t, velocity):
         self.velocity_at[t] = velocity
