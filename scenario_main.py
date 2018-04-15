@@ -25,25 +25,27 @@ parser.add_option("-o","--output",dest="results",type="str",default="statistics.
 opt, args = parser.parse_args()
 
 # Global vars
-MAX_TRANGE = 200.0 # maximum transmission range
+MAX_TRANGE = 300.0 # maximum transmission range
 try:
     STATISTICS_FILE = open(opt.results,"w")
-    print "The output will be saved in file => {}".format(STATISTICS_FILE.name)
-    STATISTICS_FILE.close()
+    print "The output will be saved at => {}".format(STATISTICS_FILE.name)
 except Exception as error:
     print error
     exit(-1)
 
+mob_files = ['/tmp/mobility25','/tmp/mobility50','/tmp/mobility75','/tmp/mobility100',
+'/tmp/highway25','/tmp/highway50','/tmp/highway75','/tmp/highway100']
+
 if opt.trace:
-    nodelist,sim_time = mob.build_topo(trace=opt.trace)
-    # print nodelist['1'].get_velocityAt('149.00') #
-    # print nodelist['0'].get_positionAt('0.00') #
-    # n_nodes = len(nodelist)
-    metrics.medium_distance(nodelist=nodelist,output_file=STATISTICS_FILE,
-    MAX_TRANGE=MAX_TRANGE,sim_time=sim_time)
-
-
-
+    for f in mob_files:
+        nodelist,sim_time = mob.build_topo(trace=f)
+        # print nodelist['1'].get_velocityAt('149.00') #
+        # print nodelist['0'].get_positionAt('0.00') #
+        # n_nodes = len(nodelist)
+        STATISTICS_FILE.write("{} ".format(f))
+        metrics.medium_distance(nodelist=nodelist,output_file=STATISTICS_FILE,
+        MAX_TRANGE=MAX_TRANGE,sim_time=sim_time)
+    STATISTICS_FILE.close() # Close statistics file
 else:
     print "[-] Invalid entry! Try -h|--help for help."
     exit(-1)
