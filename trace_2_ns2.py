@@ -68,11 +68,11 @@ def createTracefile(output): # Read the mobility infos in nodecontainer and crea
 
                 if intervals == '0.00' and speed == '0.00':
                     to_str = "$node_({0}) set X_ {1} ;\n\
-$node_({0}) set Y_ {2} ;\n\
-$ns at {3} \"$node_({0}) setdest {1} {2} {4}\"\n\
+$node_({0}) set Y_ {2} ;#ref\n\
+$ns_ at {3} \"$node_({0}) setdest {1} {2} {4}\"\n\
                               ".format(node_id,posX,posY,intervals,speed)
                 else:
-                    to_str = "$ns at {1} \"$node_({0}) setdest {2} {3} {4}\"\n".format(node_id,intervals,
+                    to_str = "$ns_ at {1} \"$node_({0}) setdest {2} {3} {4}\"\n".format(node_id,intervals,
                     posX,posY,speed)
 
                 tracefile.write(to_str)
