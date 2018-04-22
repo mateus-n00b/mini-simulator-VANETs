@@ -3,9 +3,9 @@ class Car(object):
         '''Creates a new node and set its mobility informations'''
         self.n_id = n_id
         # Dict format: {time:'values'}
-        self.velocity_at = {'0.0':'0.0'} # time:velocity
+        self.velocity_at = {'0.00':'0.00'} # time:velocity
         self.position_at = {
-        "0.0":
+        "0.00":
         {"X_":"0.0",
         "Y_":"0.0"}
         }
