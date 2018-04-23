@@ -18,11 +18,15 @@ from optparse import OptionParser
 
 parser = OptionParser()
 parser.add_option("-t","--trace",dest="trace",type="str",default=None,
-                help="ns-2 mobility trace file")
+                action='store', help="ns-2 mobility trace file")
 parser.add_option("-o","--output",dest="results",type="str",default="statistics.dat",
-                help="ns-2 mobility trace file")
+                help="ns-2 mobility trace file",nargs=1)
 
 opt, args = parser.parse_args()
+
+if not len(args):
+    print "[-] Invalid entry! Try -h|--help for help."
+    exit(-1)
 
 # Global vars
 MAX_TRANGE = 300.0 # maximum transmission range
