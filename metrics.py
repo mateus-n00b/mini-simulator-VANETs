@@ -44,7 +44,7 @@ def medium_distance(nodelist,output_file,MAX_TRANGE,sim_time):
     AVERAGE = 0.0
     for v in AVERAGE_DISTANCE:
         AVERAGE+=v
-    print "%.2f" % (AVERAGE/n_nodes)
+    print "AVERAGE = %.2f" % (AVERAGE/n_nodes)
     output_file.write("%.2f\n" % (AVERAGE/n_nodes)) # Logging
 
 

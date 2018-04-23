@@ -39,6 +39,7 @@ except Exception as error:
 if opt.trace:
     # for f in mob_files:
     nodelist,sim_time = mob.build_topo(trace=opt.trace)
+    print "simulation time = {0}".format(sim_time)
     # print nodelist['1'].get_velocityAt('149.00') #
     # print nodelist['0'].get_positionAt('0.00') #
     # n_nodes = len(nodelist)
