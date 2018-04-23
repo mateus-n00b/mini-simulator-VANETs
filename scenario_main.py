@@ -18,15 +18,11 @@ from optparse import OptionParser
 
 parser = OptionParser()
 parser.add_option("-t","--trace",dest="trace",type="str",default=None,
-                action='store', help="ns-2 mobility trace file")
+                 help="ns-2 mobility trace file")
 parser.add_option("-o","--output",dest="results",type="str",default="statistics.dat",
                 help="ns-2 mobility trace file",nargs=1)
 
 opt, args = parser.parse_args()
-
-if not len(args):
-    print "[-] Invalid entry! Try -h|--help for help."
-    exit(-1)
 
 # Global vars
 MAX_TRANGE = 300.0 # maximum transmission range
@@ -37,18 +33,18 @@ except Exception as error:
     print error
     exit(-1)
 
-mob_files = ['/tmp/mobility25','/tmp/mobility50','/tmp/mobility75','/tmp/mobility100',
-'/tmp/highway25','/tmp/highway50','/tmp/highway75','/tmp/highway100']
+# mob_files = ['/tmp/mobility25','/tmp/mobility50','/tmp/mobility75','/tmp/mobility100',
+# '/tmp/highway25','/tmp/highway50','/tmp/highway75','/tmp/highway100']
 
 if opt.trace:
-    for f in mob_files:
-        nodelist,sim_time = mob.build_topo(trace=f)
-        # print nodelist['1'].get_velocityAt('149.00') #
-        # print nodelist['0'].get_positionAt('0.00') #
-        # n_nodes = len(nodelist)
-        STATISTICS_FILE.write("{} ".format(f))
-        metrics.medium_distance(nodelist=nodelist,output_file=STATISTICS_FILE,
-        MAX_TRANGE=MAX_TRANGE,sim_time=sim_time)
+    # for f in mob_files:
+    nodelist,sim_time = mob.build_topo(trace=opt.trace)
+    # print nodelist['1'].get_velocityAt('149.00') #
+    # print nodelist['0'].get_positionAt('0.00') #
+    # n_nodes = len(nodelist)
+    STATISTICS_FILE.write("{} ".format(opt.trace))
+    metrics.medium_distance(nodelist=nodelist,output_file=STATISTICS_FILE,
+    MAX_TRANGE=MAX_TRANGE,sim_time=sim_time)
     STATISTICS_FILE.close() # Close statistics file
 else:
     print "[-] Invalid entry! Try -h|--help for help."

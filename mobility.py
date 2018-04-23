@@ -11,7 +11,7 @@ def build_topo(trace):
         number_cars = int(str(parsed_tracer.readline()).split("#number cars:")[1].split("avg")[0])
         # Dict structure == {ID:node_object}
         cars_in_sim = dict()
-        sim_time = ""
+        sim_time = "0.00"
 
         for rows in parsed_tracer.readlines():
             rows = rows.rstrip()
@@ -33,6 +33,8 @@ def build_topo(trace):
 
             elif "setdest" in rows:
                 time = rows.split(" ")[2]
+                sim_time = time if float(time)>float(sim_time) else sim_time
+
                 X = rows.split(" ")[5]
                 Y = rows.split(" ")[6]
                 velocity = rows.split(" ")[7]
@@ -41,11 +43,11 @@ def build_topo(trace):
                 carX.setPositionAt(time,'Y_',Y)
                 # print n_id,time,velocity
                 carX.setVelocityAt(time,velocity)
-            sim_time = rows.split(" ")[2] 
+            # sim_time = rows.split(" ")[2]
         return (cars_in_sim, sim_time)
 
     except Exception as error:
-            print "{0}".format(error)
+            print "on '{0}' => {1}".format(__name__,error.message)
             exit(-1)
 
 def euclidean_distance(a,b): # A = (px,qx), B = (qx,qy)
