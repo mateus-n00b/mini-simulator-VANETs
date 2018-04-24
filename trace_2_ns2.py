@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # Script for my master's degree thesis
-#
-# Author: Mateus Sousa (mateus-n00b), UFBA-Brazil (2018)
-#
+# Author: Mateus Sousa (mateus-n00b), UFBA-Brazil
+# Year: 2018
 # License: GPLv3+
-# TODO: Test the limits of Class car (i.e., how many objects it supports?)
+# TODO: Test the limits of Class car (i.e., how many objects does it supports?)
 import csv,sys
 import car # Class car creates a representative object for every node in the tracefile
 from optparse import OptionParser
