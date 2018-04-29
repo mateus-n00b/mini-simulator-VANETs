@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 # Script for my master's degree thesis
-# Author: Mateus Sousa (mateus-n00b), UFBA-Brazil
-# Year: 2018
+#
+# Author: Mateus Sousa (mateus-n00b), UFBA-Brazil (2018)
+#
 # License: GPLv3+
-# TODO: Test the limits of Class car (i.e., how many objects does it supports?)
+# TODO: Test the limits of Class car (i.e., how many objects it supports?)
 import csv,sys
 import car # Class car creates a representative object for every node in the tracefile
 from optparse import OptionParser
+
+add_ids = open("used_nodes.dat","a+")
+file_1 = open("used_nodes.dat","r")
+used_ids = str(file_1.read())
+file_1.close()
 
 nodecontainer = dict() # Store the nodes created
 
@@ -17,11 +23,13 @@ def parser(tracefile,max_vehicles): # Read the tracefile and fills nodecontainer
     with open(tracefile, 'rb') as csvfile:
         fp =  csv.DictReader(csvfile)
         for row in fp:
-            if row['vehicle_type'] == 'Vehicle': # Just cars
+            # if row['vehicle_type'] == 'Vehicle': # Just cars
+            if row['vehicle_id'] not in used_ids:
                 if not nodecontainer.has_key(row['vehicle_id']) and (node_id < max_vehicles): # how many nodes? Can I add one more?
                     m_car = car.Car(n_id=node_id)
                     nodecontainer[row['vehicle_id']] = m_car
                     node_id+=1 # Increments node_id for another Vehicle
+                    add_ids.write(row['vehicle_id']+'\n')
 
                 time = row['timestep_time']
                 posX = row['vehicle_x']
@@ -35,6 +43,7 @@ def parser(tracefile,max_vehicles): # Read the tracefile and fills nodecontainer
                     m_car.setVelocityAt(time,speed)
                 except:
                     pass
+    add_ids.close()
 
 # NOTE: For debug purposes
 # parser('vanet-trace-creteil-20130924-0700-0900.csv',2)
@@ -53,8 +62,9 @@ def createTracefile(output): # Read the mobility infos in nodecontainer and crea
       $ns at $time $node set Z_ Z1
     '''
     with open(output,'w') as tracefile:
-        for nodes in nodecontainer.values():
+        tracefile.write("#number cars:{0}\n".format(len(nodecontainer)))
 
+        for nodes in nodecontainer.values():
             node_id = nodes.get_id()
             positionDict = nodes.get_positionDict()
             velocityDict = nodes.get_velocityDict()
