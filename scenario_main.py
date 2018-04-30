@@ -43,8 +43,8 @@ if opt.trace:
     # print nodelist['1'].get_velocityAt('149.00') #
     # print nodelist['0'].get_positionAt('0.00') #
     # n_nodes = len(nodelist)
-    STATISTICS_FILE.write("{} ".format(opt.trace))
-    metrics.medium_distance(nodelist=nodelist,output_file=STATISTICS_FILE,
+    STATISTICS_FILE.write("{0}\nsim_time = {1}\n".format(opt.trace,sim_time))
+    metrics.average_distance(nodelist=nodelist,output_file=STATISTICS_FILE,
     MAX_TRANGE=MAX_TRANGE,sim_time=sim_time)
     STATISTICS_FILE.close() # Close statistics file
 else:

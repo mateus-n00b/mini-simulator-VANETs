@@ -33,7 +33,7 @@ def build_topo(trace):
 
             elif "setdest" in rows:
                 time = rows.split(" ")[2]
-                sim_time = time if float(time)>float(sim_time) else sim_time
+                sim_time = time if float(time)>float(sim_time) else sim_time # Maximum value found.
 
                 X = rows.split(" ")[5]
                 Y = rows.split(" ")[6]
@@ -52,7 +52,9 @@ def build_topo(trace):
 
 def euclidean_distance(a,b): # A = (px,qx), B = (qx,qy)
     try:
-        return ((a[0]-b[0])**2+(a[1]-b[1])**2)**0.5
+        if a[0] != -1 and a[1] !=-1:
+           return ((a[0]-b[0])**2+(a[1]-b[1])**2)**0.5
+        return 99999 # a big number
     except Exception as error:
         print "Entry: ",a,b,error
         exit(-1)
