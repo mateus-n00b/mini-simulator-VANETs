@@ -1,12 +1,11 @@
 # Obtaining metrics
 #
-#
-#
-#
-#
-#
+# Author: mateus Sousa (mateus-n00b)
+# Institution: UFBA - Salvador, Brazil
+# Date: 30/04/2018
 import mobility as mob
 
+# Globas lists
 AVERAGE_LINK_LIFETIME = float()
 AVERAGE_DISTANCE = list()
 AVERAGE_NEIGHBORS = list()
@@ -17,7 +16,7 @@ def average_distance(nodelist,output_file,MAX_TRANGE,sim_time):
     global AVERAGE_NEIGHBORS
     global AVERAGE_VELOCITY
 
-    n_nodes = len(nodelist)
+    n_nodes = len(nodelist) # number of nodes
 
     for node in xrange(n_nodes):
           consumer = nodelist[str(node)]
@@ -25,13 +24,11 @@ def average_distance(nodelist,output_file,MAX_TRANGE,sim_time):
           average_distance_temp = float()
           average_neighbors_temp = float()
           average_node_velocity = float()
-        #   n_neighbors = 0.0 # numver of neighbors
 
           for t in intervals:
               if t != '-1' :
                   consumer_pos_at = consumer.get_positionAt(t)
                   consumer_vel_at = consumer.get_velocityAt(t)
-
                   n_neighbors = 0.0
                   temp_var = 0.0
                   for neighbor in xrange(n_nodes):
@@ -45,7 +42,6 @@ def average_distance(nodelist,output_file,MAX_TRANGE,sim_time):
                               if distance_fromX <= MAX_TRANGE:
                                 # print "at %ss - %d is neighbor of %d" % (t,node,neighbor), consumer_pos_at, producer_pos_at,
                                 # print "distance = %.2f" % (distance_fromX)
-                                # average_distance_temp+=distance_fromX # Wrong? Yes, it is!
                                 temp_var+=distance_fromX # Wrong?
                                 n_neighbors+=1.0 # How many neighbors?
 
@@ -58,20 +54,22 @@ def average_distance(nodelist,output_file,MAX_TRANGE,sim_time):
           AVERAGE_NEIGHBORS.append(average_neighbors_temp/float(sim_time))
           AVERAGE_VELOCITY.append(average_node_velocity/float(sim_time))
 
+    # Temp vars
     average_distance_temp = float()
     average_neighbors_temp = float()
     average_node_velocity = float()
-
+    # Files to statistical
     distance_file = open(output_file.name+"_distance_file","w")
     neighbors_file = open(output_file.name+"_neighbors_file","w")
     velocity_file = open(output_file.name+"_velocity_file","w")
 
+    # Saving data for statistical analysis
     for v in xrange(len(AVERAGE_DISTANCE)):
         # print AVERAGE_DISTANCE[v],AVERAGE_NEIGHBORS[v]
         average_distance_temp+=AVERAGE_DISTANCE[v]
         average_neighbors_temp+=AVERAGE_NEIGHBORS[v]
         average_node_velocity+=AVERAGE_VELOCITY[v]
-
+        # Saving Statistics
         distance_file.write("%.3f\n" % AVERAGE_DISTANCE[v])
         neighbors_file.write("%.3f\n" % AVERAGE_NEIGHBORS[v])
         velocity_file.write("%.3f\n" % AVERAGE_VELOCITY[v])
@@ -80,6 +78,7 @@ def average_distance(nodelist,output_file,MAX_TRANGE,sim_time):
     print "Average neighbors = %.2f" % (average_neighbors_temp/n_nodes)
     print "Average velocity = %.3f" % (average_node_velocity/n_nodes)
 
+    # General Averages
     output_file.write("Average distance = %.3f\n" % (average_distance_temp/n_nodes)) # Logging
     output_file.write("Average neighbors = %.3f\n" % (average_neighbors_temp/n_nodes)) # Logging
     output_file.write("Average velocity = %.3f\n" % (average_node_velocity/n_nodes)) # Logging
